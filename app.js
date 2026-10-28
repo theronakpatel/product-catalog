@@ -1,5 +1,5 @@
 import { products } from "./products.js";
-import { filterProducts } from "./search-products.js";
+import { filterProducts, createDefaultFilterState } from "./search-products.js";
 import { sortProductsByPrice } from "./sort-products.js";
 
 const productList = document.querySelector("#product-list");
@@ -10,6 +10,7 @@ const productCategory = document.querySelector("#product-category");
 const minPrice = document.querySelector("#min-price");
 const maxPrice = document.querySelector("#max-price");
 const priceError = document.querySelector("#price-error");
+const clearFilters = document.querySelector("#clear-filters");
 const formatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 let activeDirection;
 
@@ -108,6 +109,23 @@ function updateCatalog() {
     : `Showing ${displayedProducts.length} product${displayedProducts.length === 1 ? "" : "s"}.`;
 }
 
+function clearCatalogFilters(){
+  const defaultFilters = createDefaultFilterState();
+
+  productSearch.value = defaultFilters.searchTerm;
+  productCategory.value = defaultFilters.category;
+  inStockOnly.checked = defaultFilters.inStockOnly;
+  minPrice.value = defaultFilters.minPrice;
+  maxPrice.value = defaultFilters.maxPrice;
+  activeDirection = defaultFilters.direction;
+  
+  priceError.textContent = "";
+  minPrice.removeAttribute("aria-invalid");
+  maxPrice.removeAttribute("aria-invalid");
+
+  updateCatalog();
+}
+
 document.querySelectorAll("[data-direction]").forEach((button) => {
   button.addEventListener("click", () => {
     activeDirection = button.dataset.direction;
@@ -120,5 +138,6 @@ inStockOnly.addEventListener("change", updateCatalog);
 productCategory.addEventListener("change",updateCatalog);
 minPrice.addEventListener("input", updateCatalog);
 maxPrice.addEventListener("input", updateCatalog);
+clearFilters.addEventListener("click", clearCatalogFilters);
 
 updateCatalog();

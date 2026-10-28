@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { products } from "../products.js";
-import { filterProducts, filterProductsBySearch } from "../search-products.js";
+import { filterProducts, filterProductsBySearch, createDefaultFilterState } from "../search-products.js";
 import { sortProductsByPrice } from "../sort-products.js";
 import { accessSync } from "node:fs";
 
@@ -78,6 +78,28 @@ test("combines category and in-stock filters", () => {
    inStockOnly: true
  })
 });
+
+test("provides the default cleared filter values", () => {
+  assert.deepEqual(createDefaultFilterState(),{
+    searchTerm: "",
+    category: "",
+    inStockOnly: false,
+    minPrice: "",
+    maxPrice: "",
+    direction: undefined
+  })
+});
+
+test("returns produts in catalog order after filters are cleared", () => {
+  const defaultFilters = createDefaultFilterState();
+  const matches = filterProducts(products, defaultFilters);
+
+  assert.deepEqual(
+    matches.map((product) => product.id),
+    products.map((product) => product.id)
+  )
+
+})
 
 function prices(items) {
   return items.map((item) => item.price);

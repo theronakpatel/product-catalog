@@ -8,6 +8,17 @@ export function filterProductsBySearch(products, searchTerm = "") {
   return products.filter((product) => product.name.toLowerCase().includes(normalizedSearchTerm));
 }
 
+export function createDefaultFilterState(){
+  return {
+    searchTerm: "",
+    category: "",
+    inStockOnly: false,
+    minPrice: "",
+    maxPrice: "",
+    direction: undefined
+  }
+}
+
 export function filterProducts(products, { searchTerm = "", inStockOnly = false, category = "", minPrice, maxPrice } = {}) {
   const normalizedSearchTerm = searchTerm.trim().toLowerCase();
   const minimum = minPrice === "" || minPrice == null ? -Infinity : Number(minPrice);
