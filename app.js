@@ -6,6 +6,7 @@ const productList = document.querySelector("#product-list");
 const sortStatus = document.querySelector("#sort-status");
 const productSearch = document.querySelector("#product-search");
 const inStockOnly = document.querySelector("#in-stock-only");
+const productCategory = document.querySelector("#product-category");
 const minPrice = document.querySelector("#min-price");
 const maxPrice = document.querySelector("#max-price");
 const priceError = document.querySelector("#price-error");
@@ -93,6 +94,7 @@ function updateCatalog() {
   const filteredProducts = filterProducts(products, {
     searchTerm: productSearch.value,
     inStockOnly: inStockOnly.checked,
+    category: productCategory.value,
     minPrice: minPrice.value,
     maxPrice: maxPrice.value
   });
@@ -115,6 +117,7 @@ document.querySelectorAll("[data-direction]").forEach((button) => {
 
 productSearch.addEventListener("input", updateCatalog);
 inStockOnly.addEventListener("change", updateCatalog);
+productCategory.addEventListener("change",updateCatalog);
 minPrice.addEventListener("input", updateCatalog);
 maxPrice.addEventListener("input", updateCatalog);
 

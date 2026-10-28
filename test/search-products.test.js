@@ -3,6 +3,7 @@ import test from "node:test";
 import { products } from "../products.js";
 import { filterProducts, filterProductsBySearch } from "../search-products.js";
 import { sortProductsByPrice } from "../sort-products.js";
+import { accessSync } from "node:fs";
 
 test("finds products by name without case sensitivity", () => {
   assert.deepEqual(filterProductsBySearch(products, "MUG").map((product) => product.name), ["Trail Mug"]);
@@ -61,6 +62,22 @@ test("allows a minimum price without a maximum",() =>{
  assert.deepEqual(matches.map((product) => product.name),["Summit Pack"]);
 });
 
+test("filters products by category", () =>{
+  const matches = filterProducts(products, {category: "Camping"});
+  assert.deepEqual(matches.map((product) => product.name), ["Camp Lantern"]);
+});
+
+test("returns no products for an unknown category", () => {
+  const matches = filterProducts(products, {category: "Footwear"});
+  assert.deepEqual(matches, []);
+});
+
+test("combines category and in-stock filters", () => {
+ const matches = filterProducts(products, {
+   category: "Camping",
+   inStockOnly: true
+ })
+});
 
 function prices(items) {
   return items.map((item) => item.price);
