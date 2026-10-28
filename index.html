@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product catalog</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="catalog">
+      <header>
+        <p class="eyebrow">Outfitters</p>
+        <h1>Product catalog</h1>
+        <p>Sort six sample products by price.</p>
+      </header>
+
+      <div class="toolbar">
+        <div class="search-control">
+          <input id="product-search" type="search" placeholder="Search products" aria-label="Search products" />
+        </div>
+        <div class="controls" aria-label="Product sorting controls">
+          <button type="button" data-direction="asc">Price: low to high</button>
+          <button type="button" data-direction="desc">Price: high to low</button>
+        </div>
+      </div>
+
+      <fieldset class="filters" aria-label="Product filters">
+        <legend>Filters</legend>
+        <label><input id="in-stock-only" type="checkbox" /> In stock only</label>
+        <label>Min price <input id="min-price" type="number" min="0" step="0.01" placeholder="Any" /></label>
+        <label>Max price <input id="max-price" type="number" min="0" step="0.01" placeholder="Any" /></label>
+        <p id="price-error" class="price-error" aria-live="polite"></p>
+      </fieldset>
+
+      <p id="sort-status" class="sort-status" aria-live="polite">Showing catalog order.</p>
+      <section id="product-list" class="product-list" aria-label="Products"></section>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

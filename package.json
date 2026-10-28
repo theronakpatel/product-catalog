@@ -1,0 +1,11 @@
+{
+  "name": "product-price-sorting-exercise",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "A small catalog exercise demonstrating and fixing string-based price sorting.",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}
